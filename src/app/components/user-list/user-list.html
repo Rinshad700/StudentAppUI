@@ -1,15 +1,15 @@
 <div class="container mt-4">
 
-    <!-- Course List -->
+    <!-- User List -->
     <div *ngIf="!showForm">
 
         <div class="d-flex justify-content-between align-items-center mb-3">
 
-            <h3>Course List</h3>
+            <h3>User List</h3>
 
             <button
                 class="btn btn-primary"
-                (click)="newCourse()">
+                (click)="newUser()">
 
                 + New
 
@@ -28,9 +28,9 @@
                         <input
                             type="text"
                             class="form-control"
-                            placeholder="Search by code, course or department..."
+                            placeholder="Search by username, email or phone..."
                             [(ngModel)]="searchText"
-                            (keyup)="searchCourses()">
+                            (keyup)="searchUsers()">
 
                     </div>
 
@@ -43,9 +43,10 @@
                         <tr>
 
                             <th>Actions</th>
-                            <th>Course Code</th>
-                            <th>Course Name</th>
-                            <th>Department</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Role</th>
                             <th>Status</th>
 
                         </tr>
@@ -54,13 +55,13 @@
 
                     <tbody>
 
-                        <tr *ngFor="let course of courses">
+                        <tr *ngFor="let user of users">
 
                             <td class="text-center">
 
                                 <button
                                     class="btn btn-link p-0"
-                                    (click)="editCourse(course)"
+                                    (click)="editUser(user)"
                                     title="Edit">
 
                                     <i class="bi bi-pencil-square"></i>
@@ -69,19 +70,21 @@
 
                             </td>
 
-                            <td>{{ course.courseCode }}</td>
+                            <td>{{ user.userName }}</td>
 
-                            <td>{{ course.courseName }}</td>
+                            <td>{{ user.email }}</td>
 
-                            <td>{{ course.departmentName }}</td>
+                            <td>{{ user.phoneNumber }}</td>
+
+                            <td>{{ user.role }}</td>
 
                             <td>
 
                                 <span
                                     class="badge"
-                                    [ngClass]="course.isActive ? 'bg-success' : 'bg-danger'">
+                                    [ngClass]="user.isActive ? 'bg-success' : 'bg-danger'">
 
-                                    {{ course.isActive ? 'Active' : 'Inactive' }}
+                                    {{ user.isActive ? 'Active' : 'Inactive' }}
 
                                 </span>
 
@@ -99,7 +102,7 @@
 
     </div>
 
-    <!-- Create / Update Course -->
+    <!-- Create / Update User -->
 
     <div *ngIf="showForm">
 
@@ -109,7 +112,7 @@
 
                 <h3>
 
-                    {{ isEditMode ? 'Update Course' : 'Create Course' }}
+                    {{ isEditMode ? 'Update User' : 'Create User' }}
 
                 </h3>
 
@@ -119,29 +122,74 @@
 
                 <div class="row">
 
+                    <!-- Username -->
+
                     <div class="col-md-6 mb-3">
 
                         <label class="form-label">
 
-                            Department <span class="text-danger">*</span>
+                            Username <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input
+                            class="form-control"
+                            [(ngModel)]="user.userName">
+
+                    </div>
+
+                    <!-- Email -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Email <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input
+                            type="email"
+                            class="form-control"
+                            [(ngModel)]="user.email">
+
+                    </div>
+
+                    <!-- Phone -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Phone Number
+
+                        </label>
+
+                        <input
+                            class="form-control"
+                            [(ngModel)]="user.phoneNumber">
+
+                    </div>
+
+                    <!-- Role -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Role
 
                         </label>
 
                         <select
                             class="form-select"
-                            [(ngModel)]="course.departmentId">
-
-                            <option value="">
-
-                                -- Select Department --
-
-                            </option>
+                            [(ngModel)]="user.role">
 
                             <option
-                                *ngFor="let department of departments"
-                                [value]="department.id">
+                                *ngFor="let role of roles"
+                                [value]="role">
 
-                                {{ department.departmentName }}
+                                {{ role }}
 
                             </option>
 
@@ -149,38 +197,47 @@
 
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <!-- Password -->
+
+                    <div
+                        class="col-md-6 mb-3"
+                        *ngIf="!isEditMode">
 
                         <label class="form-label">
 
-                            Course Code <span class="text-danger">*</span>
+                            Password <span class="text-danger">*</span>
 
                         </label>
 
                         <input
+                            type="password"
                             class="form-control"
-                            maxlength="20"
-                            placeholder="e.g. BCA101"
-                            [(ngModel)]="course.courseCode">
+                            [(ngModel)]="user.password">
 
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <!-- Confirm Password -->
+
+                    <div
+                        class="col-md-6 mb-3"
+                        *ngIf="!isEditMode">
 
                         <label class="form-label">
 
-                            Course Name <span class="text-danger">*</span>
+                            Confirm Password <span class="text-danger">*</span>
 
                         </label>
 
                         <input
+                            type="password"
                             class="form-control"
-                            placeholder="e.g. Bachelor of Computer Applications"
-                            [(ngModel)]="course.courseName">
+                            [(ngModel)]="user.confirmPassword">
 
                     </div>
 
                 </div>
+
+                <!-- Active -->
 
                 <div class="form-check form-switch mb-3">
 
@@ -188,7 +245,7 @@
                         class="form-check-input"
                         type="checkbox"
                         id="isActive"
-                        [(ngModel)]="course.isActive">
+                        [(ngModel)]="user.isActive">
 
                     <label
                         class="form-check-label"
@@ -200,9 +257,11 @@
 
                 </div>
 
+                <!-- Buttons -->
+
                 <button
                     class="btn btn-success me-2"
-                    (click)="saveCourse()"
+                    (click)="saveUser()"
                     [disabled]="!isFormValid">
 
                     {{ isEditMode ? 'Update' : 'Save' }}
