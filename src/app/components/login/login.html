@@ -1,0 +1,91 @@
+<div class="container-fluid p-0">
+  <div class="row g-0 vh-100">
+
+    <!-- Left Side -->
+    <div class="col-lg-6 left-panel">
+
+      <div class="left-content">
+
+        <h1 class="title">
+          Welcome
+        </h1>
+
+        <img
+          src="/images/login-illustration.png"
+          class="illustration"
+          alt="Student Illustration">
+
+      </div>
+
+    </div>
+
+    <!-- Right Side -->
+    <!-- Right Side -->
+<div class="col-lg-6 right-panel">
+
+  <div class="login-card">
+
+    <h2>Welcome Back 👋</h2>
+
+    <p class="text-muted mb-4">
+      Sign in to continue
+    </p>
+
+    <form (ngSubmit)="login()">
+
+      <div class="mb-3">
+
+        <label class="form-label">
+          Username
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter username"
+          name="username"
+          [(ngModel)]="username"
+          required>
+
+      </div>
+
+      <div class="mb-4">
+
+        <label class="form-label">
+          Password
+        </label>
+
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Enter password"
+          name="password"
+          [(ngModel)]="password"
+          required>
+
+      </div>
+
+      <div
+        class="text-danger mb-3"
+        *ngIf="error">
+
+        {{ error }}
+
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary login-btn">
+
+        Login
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+  </div>
+</div>

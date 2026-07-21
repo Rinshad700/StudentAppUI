@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary px-4">
+
+    <a class="navbar-brand fw-bold">
+        Student Management System
+    </a>
+
+    <div class="ms-auto">
+
+        <button
+            class="btn btn-outline-light"
+            (click)="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</nav>
+
+<div class="container mt-4">
+
+    <ul class="nav nav-tabs">
+
+        <li class="nav-item">
+
+            <a
+                class="nav-link active"
+                routerLink="/departments">
+
+                Departments
+
+            </a>
+
+        </li>
+
+    </ul>
+
+    <router-outlet></router-outlet>
+
+</div>
